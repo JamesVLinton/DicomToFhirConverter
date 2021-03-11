@@ -1,0 +1,19 @@
+# docker run -p 8081:8081 jvl2020/dicom-backend
+# docker run -p 8080:80 -v /Users/jameslinton/Projects/miniproject3/front_end/:/usr/share/nginx/html:ro nginx
+# docker run -p 4242:4242 -p 8042:8042 --rm -v /Users/jameslinton/Projects/miniproject3/dicom_db/dicom_db_files:/var/lib/orthanc/db/ jodogne/orthanc:1.9.1
+version: '3'
+services:
+    front_end:
+      image: nginx
+      ports: [8080:80]
+      volumes:
+        - ./front_end/:/usr/share/nginx/html:ro
+    dicom_backend:
+        build: ./dicom_backend
+        ports: [8081:8081]
+    dicom_db:
+        image: jodogne/orthanc:1.9.1
+        ports: [4242:4242,8042:8042]
+        volumes:
+          - ./dicom_db/dicom_db_files:/var/lib/orthanc/db/
+        
